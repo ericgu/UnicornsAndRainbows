@@ -14,6 +14,7 @@ The manager class is where all the fun is; it doesn't do very much but is couple
 browser navigator class. 
 
 This seems like a lot of coupling for such a simple operation, and your task is to come up with a better expression. You can use your own definition of "better",
-but if you make the testing more complex or worse, it's probably isn't better. 
+but if you make the testing more complex or worse, it's probably isn't better. Note that the value in the configuration object is 
+read/write and may change during program execution. 
 
 I have some thoughts that I will try out in other forks... 
