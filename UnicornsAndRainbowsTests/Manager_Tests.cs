@@ -8,6 +8,7 @@ namespace UnicornsAndRainbowsTests
     [TestClass]
     public class Manager_Tests
     {
+#if ManagerUsed
         [TestMethod]
         public void when_I_click_on_a_button__the_proper_page_is_launched_in_the_browser()
         {
@@ -22,7 +23,7 @@ namespace UnicornsAndRainbowsTests
 
             userInterface.SimulateButtonClick("Puppies");
             Assert.AreEqual(configuration.SearchRoot + "Puppies", browserNavigator.Uri.OriginalString);
-            Assert.AreEqual(1, userInterface.Count);
         }
+#endif
     }
 }

@@ -14,7 +14,7 @@ namespace UnicornsAndRainbows
     {
         private Configuration m_configuration;
         private BrowserNavigator m_browserNavigator;
-
+        private StringFetchAndPrepend m_searchUrlConstructor;
 
         public Form1()
         {
@@ -24,9 +24,24 @@ namespace UnicornsAndRainbows
             m_configuration = new Configuration();
             m_configuration.SearchRoot = "http://www.bing.com/images/search?q=";
             m_browserNavigator = new BrowserNavigator();
+            m_searchUrlConstructor = new StringFetchAndPrepend(() => { return m_configuration.SearchRoot; });
 
+            ClickCount clickCount = new ClickCount();
+            userInterface.OnButtonClick += (s) => { clickCount.Click(); };
+            clickCount.ValueChanged += (s, count) => { userInterface.SetCount(count); };
 
-            Manager manager = new Manager(userInterface, m_configuration, m_browserNavigator);
+            userInterface.OnButtonClick += userInterface_OnButtonClick;
+
+            //Manager manager = new Manager(userInterface, m_configuration, m_browserNavigator);
+        }
+
+        void userInterface_OnButtonClick(string s)
+        {
+            Pipeline.Process(
+                s, 
+                m_searchUrlConstructor.Process, 
+                value => {return new Uri(value); },
+                m_browserNavigator.NavigateToUrl);
         }
     }
 }
